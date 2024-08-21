@@ -27,7 +27,7 @@ h1 {
 }
 
 @font-face {
-    font-family: 'Kufam-Regular'; 
+    font-family: 'Kufam-Regular';
     src: url('/src/fonts/kafum/Kufam-Regular.ttf') format('opentype');
     font-weight: normal;
     font-style: normal;
@@ -35,7 +35,7 @@ h1 {
 
 #cartoes {
     display: flex;
-    flex-direction: row; /* Alinha os cards em linha */
+    flex-direction: row; /* Alinhamento */
     flex-wrap: wrap; /* Permite que os cards quebrem para a próxima linha se necessário */
     justify-content: center; /* Centraliza os cards horizontalmente */
     margin-top: 100px;
@@ -43,7 +43,7 @@ h1 {
 }
 
 
-/* From Uiverse.io by ElSombrero2 */ 
+/* From Uiverse.io by ElSombrero2 */
 .card {
     overflow: visible;
     width: 190px;
@@ -109,13 +109,13 @@ h1 {
 }
 
 @keyframes rotation_481 {
-0% {
-    transform: rotateZ(0deg);
-}
+    0% {
+        transform: rotateZ(0deg);
+    }
 
-0% {
-    transform: rotateZ(360deg);
-}
+    0% {
+        transform: rotateZ(360deg);
+    }
 }
 
 .front {
@@ -220,8 +220,8 @@ h1 {
 .material-symbols-outlined {
     font-size: 60px;
     font-variation-settings:
-    'FILL' 0,
-    'wght' 400,
-    'GRAD' 0,
-    'opsz' 24
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
 }
