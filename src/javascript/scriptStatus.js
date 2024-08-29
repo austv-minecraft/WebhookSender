@@ -1,7 +1,9 @@
 const selecaoNotas = document.getElementById('notas-extra-manutencao');
 const tipoDeStatus = document.getElementById('webhook-type');
 const divDasNotas = document.getElementById('notas-da-manutencao');
-const divDosMotivosOffline = document.getElementById('motivos-offline');
+const divDosMotivosOffline = document.getElementById('div-motivos-offline');
+const textarea = document.getElementById('motivos-manutencao');
+const textarea2 = document.getElementById('notas-manutencao');
 textPresets();
 
 function enviarWebhook() {
@@ -36,11 +38,11 @@ function tipoDeWebhook() {
     const tipoSelecionado = document.getElementById('webhook-type').value;
 
     switch (tipoSelecionado) {
-        case "1":
+        case "manutencaoAgendada":
             return embedManutencaoAgendada();
-        case "4":
+        case "servidorOffline":
             return embedManutencaoIniciada();
-        case "5":
+        case "manutencaoFinalizada":
             return embedManutencaoFinalizada();
         default:
             return {};
@@ -80,19 +82,10 @@ function embedManutencaoAgendada() {
 
 function embedManutencaoIniciada() {
     const servidor = document.getElementById('servidor').value;
-    const horario = document.getElementById('dateStart').value;
     const previsao = document.getElementById('duracao-prevista').value;
-    const motivos = document.getElementById('motivos-manutencao').value;
     const selectedMotivo = getSelectedMotivo();
-    const notas = document.getElementById('notas-manutencao').value;
 
     var descricao = "Aviso de servidor indisponível, confira as informações abaixo.\n\n# :man_office_worker::skin-tone-1: Informações: \n- Servidor: " + servidor + "\n- Duração prevista: " + previsao + "\n\n# :pencil2: Motivo:\n- " + selectedMotivo + "\n\n# :placard: Aviso importante:\n- O servidor especificado tem a entrada indisponível durante a manutenção.\n- Será avisado neste canal quando retornar.\n- Atribua-se o cargo @status para ser notificado.";
-
-    /* Exibe as notas extras se estiver habilitado
-    if (divDasNotas.style.display != 'none') {
-        descricao+= "\n\n# :notepad_spiral: Notas:\n" + notas;
-    }
-    */
     
     const embed = {
         title: "__**ATUALIZAÇÃO DO STATUS DA REDE**__",
@@ -129,19 +122,31 @@ function embedManutencaoFinalizada() {
 selecaoNotas.addEventListener('click', function() {
     if (selecaoNotas.checked) {
         divDasNotas.style.display = 'block';
-        console.log("Resultado = " + divDasNotas.style.display);
     } else {
         divDasNotas.style.display = 'none';
-        console.log("Resultado = " + divDasNotas.style.display);
     }
 });
 
 tipoDeStatus.addEventListener('change', function() {
+    mostrarTudo();
 
-    switch (tipoDeStatus) {
-        case "4":
-            divDosMotivosOffline.style.display = 'block';
+    switch (tipoDeStatus.value) {
+
+        case "servidorOffline":
+            document.getElementById('div-manutencao-start').style.display = 'none';
+            document.getElementById('div-manutencao-motivos').style.display = 'none';
+            document.getElementById('div-manutencao-radio-notas-extras').style.display = 'none';
+            textarea2.value = '- Algum aviso importante que os jogadores precisam saber.';
             break;
+
+        case "manutencaoFinalizada":
+            document.getElementById('div-manutencao-start').style.display = 'none';
+            document.getElementById('div-manutencao-motivos').style.display = 'none';
+            document.getElementById('div-manutencao-previsao').style.display = 'none';
+            document.getElementById('div-motivos-offline').style.display = 'none';
+            textarea2.value = '- Tivemos mudanças na entrada do servidor.';
+            break;
+            
         default:
             divDosMotivosOffline.style.display = 'none';
             break;
@@ -149,15 +154,12 @@ tipoDeStatus.addEventListener('change', function() {
 });
 
 function textPresets() {
-    const textarea = document.getElementById('motivos-manutencao');
     textarea.value = '- Correção de exploits.\n- Atualização para a versão `1.21.1`.';
-
-    const textarea2 = document.getElementById('notas-manutencao');
     textarea2.value = '- O restante dos servidores estarão disponíveis.\n- Jogadores podem esperar no lobby que serão redirecionados automaticamente ao abrir o servidor.';
 }
 
 function getSelectedMotivo() {
-    const motivosOffline = document.getElementById("motivos-offline");
+    const motivosOffline = document.getElementById("div-motivos-offline");
     const radioButtons = motivosOffline.querySelectorAll("input[type='radio']");
 
     for (const radioButton of radioButtons) {
@@ -170,4 +172,13 @@ function getSelectedMotivo() {
 
     return null;
 }
+
+
+function mostrarTudo() {
+    const elementosOcultos = document.querySelectorAll("*[style*='display: none']");
+    elementosOcultos.forEach(elemento => {
+        elemento.style.display = 'block';
+    });
+}
+
 
