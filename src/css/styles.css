@@ -70,7 +70,7 @@ h1 {
 
 @font-face {
     font-family: 'Kufam-Regular';
-    src: url('/src/fonts/kafum/Kufam-Regular.ttf') format('opentype');
+    src: url('../fonts/kafum/Kufam-Regular.ttf') format('opentype');
     font-weight: normal;
     font-style: normal;
 }

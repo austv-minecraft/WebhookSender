@@ -1,7 +1,6 @@
 const selecaoNotas = document.getElementById('notas-extra-manutencao');
 const tipoDeStatus = document.getElementById('webhook-type');
 const divDasNotas = document.getElementById('notas-da-manutencao');
-const divDosMotivosOffline = document.getElementById('div-motivos-offline');
 const textarea = document.getElementById('motivos-manutencao');
 const textarea2 = document.getElementById('notas-manutencao');
 textPresets();
@@ -64,7 +63,7 @@ function embedManutencaoAgendada() {
     const horarioIniciar = "<t:" + epochTimeInicio.toSeconds() + ">";
     const cronometragem = "<t:" + epochTimeContagem.toSeconds() + ":R>";
 
-    var descricao = "Uma nova manutenção foi agendada. Manutenções são iniciadas por administradores em algum servidor por algum motivo específico.\n\n# :calendar_spiral: Informações do cronograma\n- Quando: " + horarioIniciar + "\n- Duração prevista: " + previsao + "\n- Servidor: " + servidor + "\n- Tempo para iniciar: " + cronometragem + "\n\n# :satellite: Motivo:\n" + motivos;
+    var descricao = "Uma nova manutenção foi agendada. Manutenções são iniciadas por administradores em algum servidor por algum motivo específico.\n\n# :calendar_spiral: Informações do cronograma\n- **Quando:** " + horarioIniciar + "\n- **Tempo para iniciar:** " + cronometragem + "\n- **Duração prevista:** " + previsao + "\n- **Servidor:** " + servidor + "\n\n# :satellite: Motivo:\n" + motivos;
 
     // Exibe as notas apenas se estiver habilitado
     if (divDasNotas.style.display != 'none') {
@@ -85,7 +84,7 @@ function embedManutencaoIniciada() {
     const previsao = document.getElementById('duracao-prevista').value;
     const selectedMotivo = getSelectedMotivo();
 
-    var descricao = "Aviso de servidor indisponível, confira as informações abaixo.\n\n# :man_office_worker::skin-tone-1: Informações: \n- Servidor: " + servidor + "\n- Duração prevista: " + previsao + "\n\n# :pencil2: Motivo:\n- " + selectedMotivo + "\n\n# :placard: Aviso importante:\n- O servidor especificado tem a entrada indisponível durante a manutenção.\n- Será avisado neste canal quando retornar.\n- Atribua-se o cargo @status para ser notificado.";
+    var descricao = "Aviso de servidor indisponível, confira as informações abaixo.\n\n# :man_office_worker::skin-tone-1: Informações: \n- **Servidor:** " + servidor + "\n- **Duração prevista:** " + previsao + "\n\n# :pencil2: Motivo:\n- " + selectedMotivo + "\n\n# :placard: Aviso importante:\n- O servidor especificado tem a entrada indisponível durante a manutenção.\n- Será avisado neste canal quando retornar.\n- Atribua-se o cargo @status para ser notificado.";
     
     const embed = {
         title: "__**ATUALIZAÇÃO DO STATUS DA REDE**__",
@@ -148,7 +147,7 @@ tipoDeStatus.addEventListener('change', function() {
             break;
             
         default:
-            divDosMotivosOffline.style.display = 'none';
+            document.getElementById('div-motivos-offline').style.display = 'none';
             break;
     }
 });
